@@ -30,6 +30,7 @@
 				Rellenar h1 e insertar el logo donde proceda
 				-->
 				<h1 id="titulo">
+					<i class="bi bi-controller"></i>
 					Juego del solitario 
 					<img id="logoImg" src="./imagenes/logoVIU.png">
 				</h1>			
@@ -38,12 +39,12 @@
 					de movimientos que se han hecho hasta el momento. Estos números se 
 					indicarán en los span internos -->
 				<h2 id="marcadores">
-					<span>Tiempo: 
-						<span id="contador_tiempo"></span>
+					<span>
+						<i class="bi bi-hourglass-split"></i> Tiempo: <span id="contador_tiempo"></span>
 					</span>
 					<span style="display:inline-block; width:200px"></span>
-					<span>Movimientos: 
-						<span id="contador_movimientos" class=""></span>
+					<span>
+						<i class="bi bi-plus-circle-fill"></i> Movimientos: <span id="contador_movimientos" class=""></span>
 					</span>
 				</h2>
 
@@ -80,9 +81,9 @@
 					</div>			
 				</div>	
 				
-				<div id="finJuego" class="alert alert-success finJuego" role="alert">
+				<div id="finJuego" class="alert alert-success noVisible" role="alert">
 					<h1>
-						¡Fin del juego!
+						¡Fin del juego! <i class="bi bi-emoji-smile"></i>
 					</h1>
 					<p>
 						Tiempo de juego: <span id="tiempoJuego"></span>

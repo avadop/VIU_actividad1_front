@@ -9,6 +9,11 @@
 /* Todos los contadores estarán ubicados en la parte inferior 
    derecha (position absolute) de los respectivos tapetes (position relative).
 */
+
+.container {
+	margin-top: 3em;
+}
+
 .contador {
 	position: absolute;
 	bottom: 0px;
@@ -29,6 +34,7 @@ h1 #logoImg {
 /* Centrado de los marcadores de tiempo y movimientos */
 h2#marcadores{ 
 	text-align: center; 
+	margin-top: 1em;
 }
 
 /* Mesa que contiene a los tapetes centrados */
@@ -78,7 +84,10 @@ div#divReset {
     border: dashed 3px red;
 }
 
-.finJuego{
+.noVisible{
 	display: none;
-	text-align: center;
+}
+
+.center{
+	text-align: center !important;
 }
