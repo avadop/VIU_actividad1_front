@@ -3,9 +3,9 @@
 // Array de palos
 let palos = ["viu", "cua", "hex", "cir"];
 // Array de número de cartas
-let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+// let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 // En las pruebas iniciales solo se trabajará con cuatro cartas por palo:
-//let numeros = [9, 10, 11, 12];
+let numeros = [9, 10, 11, 12];
 
 // paso (top y left) en pixeles de una carta a la siguiente en un mazo
 let paso = 5;
@@ -40,6 +40,9 @@ let contTiempo  = document.getElementById("contador_tiempo"); // span cuenta tie
 let segundos 	 = 0;    // cuenta de segundos
 let temporizador = null; // manejador del temporizador
 
+// Alerta
+let divFinJuego = document.getElementById('finJuego');
+
 
 /***** FIN DECLARACIÓN DE VARIABLES GLOBALES *****/
 
@@ -64,6 +67,8 @@ function reiniciarJuego() {
 	reiniciaTapete(tapeteReceptor3);
 	reiniciaTapete(tapeteReceptor4);
 	
+	divFinJuego.classList.add('finJuego');
+
 	comenzarJuego();
 }
 
@@ -261,7 +266,6 @@ function observarMazoInicial() {
 	} 
 
 	if(mazoInicial.length === 0 && mazoSobrantes.length === 0){
-		let divFinJuego = document.getElementById('finJuego');
 		divFinJuego.classList.remove('finJuego');
 
 		let tiempo = document.getElementById('tiempoJuego');
