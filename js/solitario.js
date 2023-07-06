@@ -160,7 +160,7 @@ function drop(e) {
 			break;
 	}
 	
-	if (validarMovimiento(numero, palo, receptorMazo)) {
+	if (receptorId !== "sobrantes" && validarMovimiento(numero, palo, receptorMazo)) {
 		let carta = document.getElementById(id);
 		let parent = carta.parentElement;
 
@@ -341,12 +341,10 @@ function comenzarJuego() {
 	tapeteReceptor4.ondrop = drop;
 	
 	// Barajar y dejar mazoInicial en tapete inicial
-	/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 	barajar(mazoInicial);
     cargarTapeteInicial(mazoInicial);
 
 	// Puesta a cero de contadores de mazos
-	/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 	setContador(contInicial, mazoInicial.length);
     setContador(contSobrantes, 0);
     setContador(contReceptor1, 0);
@@ -356,7 +354,6 @@ function comenzarJuego() {
     setContador(contMovimientos, 0);
 	
 	// Arrancar el conteo de tiempo
-	/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 	arrancarTiempo();
 } // comenzarJuego
 
@@ -445,7 +442,6 @@ function cargarTapeteInicial(mazo) {
    	del elemento que actúa de contador
 */
 function incContador(contador){
-	/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/	
 	let valor = parseInt(contador.innerText);
     valor++;
     contador.innerText = valor;
@@ -455,7 +451,6 @@ function incContador(contador){
 	Idem que anterior, pero decrementando 
 */
 function decContador(contador){
-	/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! ***/	
 	let valor = parseInt(contador.innerText);
     valor--;
     contador.innerText = valor;
@@ -466,7 +461,6 @@ function decContador(contador){
 	valor especificado
 */
 function setContador(contador, valor) {
-	/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 	contador.innerText = valor;
 } // setContador
 
