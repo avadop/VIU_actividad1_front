@@ -4,6 +4,7 @@
 let palos = ["viu", "cua", "hex", "cir"];
 // Array de número de cartas
 let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
 // En las pruebas iniciales solo se trabajará con cuatro cartas por palo:
 // let numeros = [9, 10, 11, 12];
 
@@ -11,7 +12,7 @@ let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 let paso = 5;
 
 // Tapetes				
-let tapeteInicial   = document.getElementById("inicial");
+let tapeteInicial = document.getElementById("inicial");
 let tapeteSobrantes = document.getElementById("sobrantes");
 let tapeteReceptor1 = document.getElementById("receptor1");
 let tapeteReceptor2 = document.getElementById("receptor2");
@@ -19,7 +20,7 @@ let tapeteReceptor3 = document.getElementById("receptor3");
 let tapeteReceptor4 = document.getElementById("receptor4");
 
 // Mazos
-let mazoInicial   = [];
+let mazoInicial = [];
 let mazoSobrantes = [];
 let mazoReceptor1 = [];
 let mazoReceptor2 = [];
@@ -27,17 +28,17 @@ let mazoReceptor3 = [];
 let mazoReceptor4 = [];
 
 // Contadores de cartas
-let contInicial     = document.getElementById("contador_inicial");
-let contSobrantes   = document.getElementById("contador_sobrantes");
-let contReceptor1   = document.getElementById("contador_receptor1");
-let contReceptor2   = document.getElementById("contador_receptor2");
-let contReceptor3   = document.getElementById("contador_receptor3");
-let contReceptor4   = document.getElementById("contador_receptor4");
+let contInicial = document.getElementById("contador_inicial");
+let contSobrantes = document.getElementById("contador_sobrantes");
+let contReceptor1 = document.getElementById("contador_receptor1");
+let contReceptor2 = document.getElementById("contador_receptor2");
+let contReceptor3 = document.getElementById("contador_receptor3");
+let contReceptor4 = document.getElementById("contador_receptor4");
 let contMovimientos = document.getElementById("contador_movimientos");
 
 // Tiempo
-let contTiempo  = document.getElementById("contador_tiempo"); // span cuenta tiempo
-let segundos 	 = 0;    // cuenta de segundos
+let contTiempo = document.getElementById("contador_tiempo"); // span cuenta tiempo
+let segundos = 0;    // cuenta de segundos
 let temporizador = null; // manejador del temporizador
 
 // Alerta
@@ -46,14 +47,13 @@ let divFinJuego = document.getElementById('finJuego');
 
 /***** FIN DECLARACIÓN DE VARIABLES GLOBALES *****/
 
- 
+
 // Rutina asociada a boton reset
-/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 
 // Función para reiniciar el juego
 function reiniciarJuego() {
-	
-	mazoInicial   = [];
+
+	mazoInicial = [];
 	mazoSobrantes = [];
 	mazoReceptor1 = [];
 	mazoReceptor2 = [];
@@ -66,7 +66,7 @@ function reiniciarJuego() {
 	reiniciaTapete(tapeteReceptor2);
 	reiniciaTapete(tapeteReceptor3);
 	reiniciaTapete(tapeteReceptor4);
-	
+
 	divFinJuego.classList.add('noVisible');
 
 	comenzarJuego();
@@ -77,25 +77,24 @@ function reiniciaTapete(tapete) {
 	let imgsTapeteArray = Array.from(imgsTapete);
 
 	for (let img of imgsTapeteArray) {
-	  if (tapete.contains(img)) {
-		tapete.removeChild(img);
-	  }
+		if (tapete.contains(img)) {
+			tapete.removeChild(img);
+		}
 	}
 }
-  
+
 // Asignar evento de clic al botón de reinicio
 let resetButton = document.getElementById("reset");
 resetButton.addEventListener("click", () => reiniciarJuego());
 
 
 // El juego arranca ya al cargar la página: no se espera a reiniciar
-/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 
 // Función para el evento dragstart
 function dragStart(e) {
-	e.dataTransfer.setData( "text/plain/numero", e.target.dataset["numero"] );
-	e.dataTransfer.setData( "text/plain/palo", e.target.dataset["palo"] );
-	e.dataTransfer.setData( "text/plain/id", e.target.dataset["id"] );
+	e.dataTransfer.setData("text/plain/numero", e.target.dataset["numero"]);
+	e.dataTransfer.setData("text/plain/palo", e.target.dataset["palo"]);
+	e.dataTransfer.setData("text/plain/id", e.target.dataset["id"]);
 }
 
 // Función para el evento drag
@@ -114,9 +113,9 @@ function dragEnter(e) {
 
 // Función para el evento dragover
 function dragOver(e) {
-    e.preventDefault();
+	e.preventDefault();
 	e.target.classList.add('drag-over');
-}9
+} 9
 
 // Función para el evento dragleave
 function dragLeave(e) {
@@ -126,17 +125,17 @@ function dragLeave(e) {
 
 // Función para el evento drop
 function drop(e) {
-    e.preventDefault();
+	e.preventDefault();
 	e.target.classList.remove('drag-over');
-	
-    let numero = e.dataTransfer.getData("text/plain/numero");
+
+	let numero = e.dataTransfer.getData("text/plain/numero");
 	let palo = e.dataTransfer.getData("text/plain/palo");
 	let id = e.dataTransfer.getData("text/plain/id");
 
 	let receptorId = e.target.id;
 	let receptorMazo = [];
 
-	if(receptorId.includes('-')) {
+	if (receptorId.includes('-')) {
 		receptorId = e.target.parentElement.id;
 	}
 
@@ -159,28 +158,32 @@ function drop(e) {
 		default:
 			break;
 	}
-	
+
 	if (receptorId !== "sobrantes" && validarMovimiento(numero, palo, receptorMazo)) {
 		let carta = document.getElementById(id);
 		let parent = carta.parentElement;
 
-		if(parent.id.includes('inicial')) {
+		if (parent.id.includes('inicial')) {
 			mazoInicial = mazoInicial.filter(item => item.id !== id);
-		} 
-		if(parent.id.includes('sobrantes')) {
+		}
+		if (parent.id.includes('sobrantes')) {
 			mazoSobrantes = mazoSobrantes.filter(item => item.id !== id);
-		} 
+		}
 
 		receptorMazo.push(carta);
 		let tapeteReceptor = document.getElementById(receptorId);
 
 		carta.style.top = "15px";
 		carta.style.left = "15px";
-		carta.setAttribute( "draggable", false );
+		carta.setAttribute("draggable", false);
 		tapeteReceptor.appendChild(carta);
 
 		actualizarContadores();
-	} 
+	}
+
+	if(mazoInicial.length > 0 ) {
+		tapeteInicial.lastChild.setAttribute("draggable", true);
+	}
 
 	// Llamar a la función para observar el mazo inicial
 	observarMazoInicial();
@@ -188,13 +191,13 @@ function drop(e) {
 
 
 // Función para mover a sobrantes
-function moverASobrantes(id){
+function moverASobrantes(id) {
 	let carta = document.getElementById(id);
 	mazoInicial = mazoInicial.filter(item => item.id !== id);
 	mazoSobrantes.push(carta);
 
 	carta.style.top = "15px";
-    carta.style.left = "15px";
+	carta.style.left = "15px";
 	tapeteSobrantes.appendChild(carta);
 
 	contSobrantes.textContent = mazoSobrantes.length;
@@ -213,26 +216,26 @@ function validarMovimiento(numero, palo, receptorMazo) {
 		let colorUltimaCarta = colorCarta(paloUltimaCartaMazo);
 		let colorNuevaCarta = colorCarta(palo);
 
-		if(((colorUltimaCarta === 'naranja' && colorNuevaCarta === 'gris') || (colorUltimaCarta === 'gris' && colorNuevaCarta === 'naranja')) 
-			&& (numero == numeroUltimaCartaMazo -1 )){
-			return true;	
+		if (((colorUltimaCarta === 'naranja' && colorNuevaCarta === 'gris') || (colorUltimaCarta === 'gris' && colorNuevaCarta === 'naranja'))
+			&& (numero == numeroUltimaCartaMazo - 1)) {
+			return true;
 		} else {
 			return false;
-		}	
+		}
 	}
 }
 
-function colorCarta(palo){
-	let naranja = ['cua','viu'];
-	let gris = ['cir','hex'];
+function colorCarta(palo) {
+	let naranja = ['cua', 'viu'];
+	let gris = ['cir', 'hex'];
 
 	const esNaranja = naranja.find((elem) => elem === palo) !== undefined;
 	const esGris = gris.find((elem) => elem === palo) !== undefined;
 
-	if(esNaranja) {
+	if (esNaranja) {
 		return 'naranja';
-	} 
-	if(esGris) {
+	}
+	if (esGris) {
 		return 'gris';
 	}
 
@@ -246,26 +249,26 @@ function actualizarContadores() {
 	contReceptor2.textContent = mazoReceptor2.length;
 	contReceptor3.textContent = mazoReceptor3.length;
 	contReceptor4.textContent = mazoReceptor4.length;
-	
-	let numMov = parseInt(contMovimientos.innerHTML);	
+
+	let numMov = parseInt(contMovimientos.innerHTML);
 	numMov += 1;
 	contMovimientos.innerHTML = numMov;
 }
 
 // Definir la función para observar el mazo inicial
 function observarMazoInicial() {
-	if(mazoInicial.length === 0 && mazoSobrantes !== 0){
-		barajar(mazoSobrantes);  
+	if (mazoInicial.length === 0 && mazoSobrantes !== 0) {
+		barajar(mazoSobrantes);
 		cargarTapeteInicial(mazoSobrantes);
 		reiniciaTapete(tapeteSobrantes);
-		
+
 		contSobrantes.textContent = 0;
 		contInicial.textContent = mazoSobrantes.length;
 		mazoInicial = mazoSobrantes;
 		mazoSobrantes = [];
-	} 
+	}
 
-	if(mazoInicial.length === 0 && mazoSobrantes.length === 0){
+	if (mazoInicial.length === 0 && mazoSobrantes.length === 0) {
 		divFinJuego.classList.remove('noVisible');
 		divFinJuego.classList.add('center');
 
@@ -277,7 +280,7 @@ function observarMazoInicial() {
 
 		clearTimeout(temporizador);
 	}
-}  
+}
 
 // Desarrollo del comienzo de juego
 function comenzarJuego() {
@@ -289,18 +292,16 @@ function comenzarJuego() {
 	el elemento img, inclúyase como elemento del array mazoInicial. 
 	*/
 
-	/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/	
-     for (let i = 0; i < palos.length; i++) {
-        for (let j = 0; j < numeros.length; j++) {
-            let carta = document.createElement("img");
-			const idCarta = numeros[j] +"-" + palos[i];
-            carta.src = "./imagenes/baraja/" +idCarta + ".png";
+	for (let i = 0; i < palos.length; i++) {
+		for (let j = 0; j < numeros.length; j++) {
+			let carta = document.createElement("img");
+			const idCarta = numeros[j] + "-" + palos[i];
+			carta.src = "./imagenes/baraja/" + idCarta + ".png";
 			carta.setAttribute("data-palo", palos[i]);
 			carta.setAttribute("data-numero", numeros[j]);
 			carta.setAttribute("data-id", idCarta);
 			carta.setAttribute("id", idCarta);
-			carta.setAttribute( "draggable", true );
-			
+
 			// Evento dragstart: se dispara cuando se comienza a arrastrar el objeto (carta)
 			carta.ondragstart = dragStart;
 
@@ -310,49 +311,49 @@ function comenzarJuego() {
 			// Evento dragend: se dispara cuando se ha terminado de arrastrar el objeto (carta)
 			carta.ondragend = dragEnd;
 
-            mazoInicial.push(carta);
-        }
-    }
-	
+			mazoInicial.push(carta);
+		}
+	}
+
 	// Añadimos drag and drop a los tapetes	
 	tapeteSobrantes.ondragenter = dragEnter;
 	tapeteSobrantes.ondragover = dragOver;
 	tapeteSobrantes.ondragleave = dragLeave;
-	tapeteSobrantes.ondrop = drop;	
+	tapeteSobrantes.ondrop = drop;
 
 	tapeteReceptor1.ondragenter = dragEnter;
 	tapeteReceptor1.ondragover = dragOver;
 	tapeteReceptor1.ondragleave = dragLeave;
-	tapeteReceptor1.ondrop = drop;	
-	
+	tapeteReceptor1.ondrop = drop;
+
 	tapeteReceptor2.ondragenter = dragEnter;
 	tapeteReceptor2.ondragover = dragOver;
 	tapeteReceptor2.ondragleave = dragLeave;
 	tapeteReceptor2.ondrop = drop;
-	
+
 	tapeteReceptor3.ondragenter = dragEnter;
 	tapeteReceptor3.ondragover = dragOver;
 	tapeteReceptor3.ondragleave = dragLeave;
 	tapeteReceptor3.ondrop = drop;
-	
+
 	tapeteReceptor4.ondragenter = dragEnter;
 	tapeteReceptor4.ondragover = dragOver;
 	tapeteReceptor4.ondragleave = dragLeave;
 	tapeteReceptor4.ondrop = drop;
-	
+
 	// Barajar y dejar mazoInicial en tapete inicial
 	barajar(mazoInicial);
-    cargarTapeteInicial(mazoInicial);
+	cargarTapeteInicial(mazoInicial);
 
 	// Puesta a cero de contadores de mazos
 	setContador(contInicial, mazoInicial.length);
-    setContador(contSobrantes, 0);
-    setContador(contReceptor1, 0);
-    setContador(contReceptor2, 0);
-    setContador(contReceptor3, 0);
-    setContador(contReceptor4, 0);
-    setContador(contMovimientos, 0);
-	
+	setContador(contSobrantes, 0);
+	setContador(contReceptor1, 0);
+	setContador(contReceptor2, 0);
+	setContador(contReceptor3, 0);
+	setContador(contReceptor4, 0);
+	setContador(contMovimientos, 0);
+
 	// Arrancar el conteo de tiempo
 	arrancarTiempo();
 } // comenzarJuego
@@ -374,7 +375,7 @@ function comenzarJuego() {
 	donde % denota la operación módulo (resto de la división entre los operadores)
 
 	Así, por ejemplo, si la cuenta de segundos totales es de 134 s, entonces será:
-	   00:02:14
+		 00:02:14
 
 	Como existe la posibilidad de "resetear" el juego en cualquier momento, hay que 
 	evitar que exista más de un temporizador simultáneo, por lo que debería guardarse
@@ -382,21 +383,21 @@ function comenzarJuego() {
 	a clearInterval en su caso.   
 */
 
-function arrancarTiempo(){
-    if (temporizador) clearInterval(temporizador);
-    let hms = function (){
-        let seg = Math.trunc( segundos % 60 );
-        let min = Math.trunc( (segundos % 3600) / 60 );
-        let hor = Math.trunc( (segundos % 86400) / 3600 );
-        let tiempo = ( (hor<10)? "0"+hor : ""+hor ) 
-                    + ":" + ( (min<10)? "0"+min : ""+min )  
-                    + ":" + ( (seg<10)? "0"+seg : ""+seg );
-        setContador(contTiempo, tiempo);
-        segundos++;
-    };
-    segundos = 0;
-    hms(); // Primera visualización 00:00:00
-    temporizador = setInterval(hms, 1000);
+function arrancarTiempo() {
+	if (temporizador) clearInterval(temporizador);
+	let hms = function () {
+		let seg = Math.trunc(segundos % 60);
+		let min = Math.trunc((segundos % 3600) / 60);
+		let hor = Math.trunc((segundos % 86400) / 3600);
+		let tiempo = ((hor < 10) ? "0" + hor : "" + hor)
+			+ ":" + ((min < 10) ? "0" + min : "" + min)
+			+ ":" + ((seg < 10) ? "0" + seg : "" + seg);
+		setContador(contTiempo, tiempo);
+		segundos++;
+	};
+	segundos = 0;
+	hms(); // Primera visualización 00:00:00
+	temporizador = setInterval(hms, 1000);
 } // arrancarTiempo
 
 
@@ -407,53 +408,61 @@ function arrancarTiempo(){
 	dentro de la rutina, esto aparecerá reflejado fuera de la misma.
 */
 function barajar(mazo) {
-	/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 	for (let i = mazo.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        let temp = mazo[i];
-        mazo[i] = mazo[j];
-        mazo[j] = temp;
-    }	
+		let j = Math.floor(Math.random() * (i + 1));
+		let temp = mazo[i];
+		mazo[i] = mazo[j];
+		mazo[j] = temp;
+	}
+	
 } // barajar
 
 /**
- 	En el elemento HTML que representa el tapete inicial (variable tapeteInicial)
+ * Resetea el mazo entero para que no se pueda arrastrar, solo queremos la primera carta
+ */
+function resetDraggable(mazo) {
+	mazo.forEach((carta) => carta.setAttribute("draggable", false))
+}
+
+/**
+		En el elemento HTML que representa el tapete inicial (variable tapeteInicial)
 	se deben añadir como hijos todos los elementos <img> del array mazo.
 	Antes de añadirlos, se deberían fijar propiedades como la anchura, la posición,
 	coordenadas top y left, algun atributo de tipo data-...
 	Al final se debe ajustar el contador de cartas a la cantidad oportuna
 */
 function cargarTapeteInicial(mazo) {
-	/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
+	resetDraggable(mazo);
 	for (let i = 0; i < mazo.length; i++) {
-        let carta = mazo[i];
-        carta.style.width = "70px";
-        carta.style.position = "absolute";
+		let carta = mazo[i];
+		carta.style.width = "70px";
+		carta.style.position = "absolute";
 		carta.style.top = `${paso * i}px`;
-        carta.style.left = `${paso * i}px`;
-        tapeteInicial.appendChild(carta);
-    }
-    setContador(contInicial, mazo.length);
+		carta.style.left = `${paso * i}px`;
+		tapeteInicial.appendChild(carta);
+	}
+	tapeteInicial.lastChild.setAttribute("draggable", true);
+	setContador(contInicial, mazo.length);
 } // cargarTapeteInicial
 
 
 /**
- 	Esta función debe incrementar el número correspondiente al contenido textual
-   	del elemento que actúa de contador
+		Esta función debe incrementar el número correspondiente al contenido textual
+			del elemento que actúa de contador
 */
-function incContador(contador){
+function incContador(contador) {
 	let valor = parseInt(contador.innerText);
-    valor++;
-    contador.innerText = valor;
+	valor++;
+	contador.innerText = valor;
 } // incContador
 
 /**
 	Idem que anterior, pero decrementando 
 */
-function decContador(contador){
+function decContador(contador) {
 	let valor = parseInt(contador.innerText);
-    valor--;
-    contador.innerText = valor;
+	valor--;
+	contador.innerText = valor;
 } // decContador
 
 /**
